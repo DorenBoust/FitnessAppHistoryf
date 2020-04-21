@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="mainGreen">#28dd75</color>
+    <color name="mainGreenOpacity">#B228DD75</color>
+    <color name="secondaryGreen">#51e490</color>
+    <color name="waite">#FFFFFF</color>
+    <color name="lightGreen">#97E6B8</color>
+    <color name="menuColor">#28DD75</color>
+    <color name="opacity">#0028DD75</color>
+    <color name="mainRed">#FF1000</color>
+    <color name="diet_fat">#E91E63</color>
+    <color name="diet_pro">#03A9F4</color>
+    <color name="diet_carboh">#FF9800</color>
+    <color name="piechet_shadow">#0F4124</color>
+</resources>
