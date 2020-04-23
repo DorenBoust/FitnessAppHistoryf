@@ -2,6 +2,8 @@ package com.example.fitnessapp.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,17 +21,14 @@ import com.example.fitnessapp.R;
 import com.example.fitnessapp.keys.KeysFirebaseStore;
 import com.example.fitnessapp.keys.KeysIntents;
 import com.example.fitnessapp.models.CustomMethods;
-import com.example.fitnessapp.user.ExerciseFullHistory;
 import com.example.fitnessapp.user.ExerciseHistory;
 import com.example.fitnessapp.user.ExersixeOneRawHistory;
-import com.example.fitnessapp.user.ListExHistory;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
-import com.ramotion.foldingcell.FoldingCell;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +41,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class FitnessHistoryMainActivity extends AppCompatActivity {
+public class FitnessHistoryMainActivity extends AppCompatActivity implements FitnessHistoryReciclerAdapter.OnHistoryListener
+{
 
     private AllHistoryExName allHistoryExName;
     private RecyclerView recyclerView;
@@ -61,6 +61,7 @@ public class FitnessHistoryMainActivity extends AppCompatActivity {
     private ImageView btnNextMain;
     private ImageView btnBackMain;
     private boolean btnCrash = true;
+    private int lastPositionExThatClicked = 0;
 
 
     @Override
@@ -88,13 +89,20 @@ public class FitnessHistoryMainActivity extends AppCompatActivity {
         System.out.println("listOFExerciseFullHistory " + allHistoryExName);
 
 
-        FitnessHistoryReciclerAdapter adapter = new FitnessHistoryReciclerAdapter(getLayoutInflater(),allHistoryExName);
+        FitnessHistoryReciclerAdapter adapter = new FitnessHistoryReciclerAdapter(getLayoutInflater(),allHistoryExName, FitnessHistoryMainActivity.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
 
+
+
+
+
         //start
+        exNameMain.setText(allHistoryExName.getHistoryExNames().get(lastPositionExThatClicked).getExName());
         getHistoryExFromFirebase(allHistoryExName.getHistoryExNames().get(0).getExName());
+
+
         listMutableLiveData.observe(this, new Observer<List<ExerciseHistory>>() {
             @Override
             public void onChanged(List<ExerciseHistory> exerciseHistories) {
@@ -103,6 +111,7 @@ public class FitnessHistoryMainActivity extends AppCompatActivity {
                     public void run() {
                         dateCounter = 0;
                         exerciseHistoriesRoot = exerciseHistories;
+                        System.out.println("exerciseHistoriesRoot " + exerciseHistoriesRoot );
                         lottieAnimationView.setVisibility(View.INVISIBLE);
                         System.out.println(exerciseHistories);
                         ExsercieHistoryRecyclerAdapter adapterMainHistory = new ExsercieHistoryRecyclerAdapter(exerciseHistories, dateCounter, getLayoutInflater());
@@ -110,10 +119,16 @@ public class FitnessHistoryMainActivity extends AppCompatActivity {
                         recyclerViewMainHistory.setAdapter(adapterMainHistory);
 
                         exNameMain.setVisibility(View.VISIBLE);
+
                         exDayMain.setVisibility(View.VISIBLE);
                         exDateMain.setVisibility(View.VISIBLE);
                         btnBackMain.setVisibility(View.VISIBLE);
                         recyclerViewMainHistory.setVisibility(View.VISIBLE);
+
+                        ConstraintLayout constraintLayout = recyclerView.getChildAt(lastPositionExThatClicked).findViewById(R.id.inner_constrain_ecycler);
+                        constraintLayout.setBackground(ContextCompat.getDrawable(FitnessHistoryMainActivity.this, R.drawable.background_history_clicked));
+                        constraintLayout.setElevation(0f);
+
 
 
                     }
@@ -233,6 +248,14 @@ public class FitnessHistoryMainActivity extends AppCompatActivity {
 
     private void getHistoryExFromFirebase(String exName){
 
+        exNameMain.setVisibility(View.INVISIBLE);
+        exDayMain.setVisibility(View.INVISIBLE);
+        exDateMain.setVisibility(View.INVISIBLE);
+        btnBackMain.setVisibility(View.INVISIBLE);
+        recyclerViewMainHistory.setVisibility(View.INVISIBLE);
+        lottieAnimationView.setVisibility(View.VISIBLE);
+
+
         fStore.collection(KeysFirebaseStore.EXERCISE_HISTORY_DATA).document(fAuth.getUid())
                 .collection(exName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -306,4 +329,24 @@ public class FitnessHistoryMainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void OnHistoryClick(int position) {
+        if (position == lastPositionExThatClicked) return;
+
+        System.out.println("allHistoryExName.getHistoryExNames().get(position).getExName() " + allHistoryExName.getHistoryExNames().get(position).getExName());
+        getHistoryExFromFirebase(allHistoryExName.getHistoryExNames().get(position).getExName());
+        exNameMain.setText(allHistoryExName.getHistoryExNames().get(position).getExName());
+
+        ConstraintLayout constraintLayout = recyclerView.getChildAt(position).findViewById(R.id.inner_constrain_ecycler);
+        constraintLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_history_clicked));
+        constraintLayout.setElevation(0f);
+
+        ConstraintLayout constraintLayoutBefor = recyclerView.getChildAt(lastPositionExThatClicked).findViewById(R.id.inner_constrain_ecycler);
+        constraintLayoutBefor.setBackground(ContextCompat.getDrawable(this, R.drawable.background_main_fitness_day));
+        constraintLayoutBefor.setElevation(16f);
+
+        lastPositionExThatClicked = position;
+
+
+    }
 }

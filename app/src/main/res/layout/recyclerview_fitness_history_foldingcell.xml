@@ -7,9 +7,10 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/inner_constrain_ecycler"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/background_main_fitness_day"
         android:elevation="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
