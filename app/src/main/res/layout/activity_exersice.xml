@@ -439,7 +439,6 @@
         android:layout_height="0dp"
         android:background="@drawable/background_ex_history"
         android:elevation="16dp"
-        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guideline41"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

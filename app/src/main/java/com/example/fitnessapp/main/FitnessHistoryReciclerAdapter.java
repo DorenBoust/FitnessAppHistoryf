@@ -10,13 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fitnessapp.R;
-import com.example.fitnessapp.user.ExerciseFullHistory;
-import com.example.fitnessapp.user.ExerciseHistory;
 import com.example.fitnessapp.user.HistoryExName;
-import com.example.fitnessapp.user.ListExHistory;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class FitnessHistoryReciclerAdapter extends RecyclerView.Adapter<FitnessHistoryReciclerAdapter.HistoryHolder> {
 
@@ -43,9 +38,9 @@ public class FitnessHistoryReciclerAdapter extends RecyclerView.Adapter<FitnessH
 
         HistoryExName historyExName = allHistoryExName.getHistoryExNames().get(position);
 
-        holder.layer1ExName.setText(historyExName.getExName());
+        holder.exName.setText(historyExName.getExName());
 //        holder.layer1FinalDate.setText(exerciseFullHistory.getLastDateUpdate());
-        Picasso.get().load(historyExName.getExImage()).into(holder.layer1exImage);
+        Picasso.get().load(historyExName.getExImage()).into(holder.exImage);
 
     }
 
@@ -56,16 +51,14 @@ public class FitnessHistoryReciclerAdapter extends RecyclerView.Adapter<FitnessH
 
     public class HistoryHolder extends RecyclerView.ViewHolder {
 
-        private TextView layer1FinalDate;
-        private TextView layer1ExName;
-        private ImageView layer1exImage;
+        private TextView exName;
+        private ImageView exImage;
 
         public HistoryHolder(@NonNull View itemView) {
             super(itemView);
 
-            layer1FinalDate = itemView.findViewById(R.id.tv_final_date_history);
-            layer1exImage = itemView.findViewById(R.id.iv_ex_image_history);
-            layer1ExName = itemView.findViewById(R.id.tv_ex_name_history);
+            exImage = itemView.findViewById(R.id.iv_ex_image_history);
+            exName = itemView.findViewById(R.id.tv_ex_name_history);
 
         }
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainRed"
+    android:background="@color/mainGreen"
     tools:context=".main.FitnessHistoryMainActivity">
 
 
@@ -15,5 +15,136 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline66" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline66"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/open_sans_hebrew_regular"
+        android:text="היסטוריית תרגילים"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/background_main_fitness_day"
+        android:elevation="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerview_fitness_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView_load_data"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline71"
+            app:layout_constraintStart_toStartOf="@+id/guideline70"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/new_animation_register" />
+
+
+
+        <TextView
+            android:id="@+id/tv_ex_name_history_fitness_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/open_sans_hebrew_regular"
+            android:text="יד אחורית"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_history_details_per_ex"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_history_back_iv" />
+
+        <TextView
+            android:id="@+id/tv_ex_day_history_fitness_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="יום שלישי"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/tv_ex_name_history_fitness_activity"
+            app:layout_constraintStart_toStartOf="@+id/tv_ex_name_history_fitness_activity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ex_name_history_fitness_activity" />
+
+        <TextView
+            android:id="@+id/tv_ex_date_history_fitness_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="03-02-2020"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/tv_ex_day_history_fitness_activity"
+            app:layout_constraintStart_toStartOf="@+id/tv_ex_day_history_fitness_activity"
+            app:layout_constraintTop_toTopOf="@+id/tv_ex_day_history_fitness_activity" />
+
+        <ImageView
+            android:id="@+id/btn_history_back_iv"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ex_date_history_fitness_activity"
+            app:layout_constraintEnd_toStartOf="@+id/guideline70"
+            app:layout_constraintTop_toTopOf="@+id/tv_ex_day_history_fitness_activity"
+            app:srcCompat="@drawable/back" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline70"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33" />
+
+        <ImageView
+            android:id="@+id/btn_history_next_iv"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ex_date_history_fitness_activity"
+            app:layout_constraintStart_toStartOf="@+id/guideline71"
+            app:layout_constraintTop_toTopOf="@+id/tv_ex_day_history_fitness_activity"
+            app:srcCompat="@drawable/next" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline71"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

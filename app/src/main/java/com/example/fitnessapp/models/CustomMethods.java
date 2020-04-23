@@ -59,19 +59,19 @@ public class CustomMethods {
 
     public static String convertDate(String correctDay){
         switch (correctDay){
-            case "sunday":
+            case "Sunday":
                 return "יום ראשון";
-            case "monday":
+            case "Monday":
                 return "יום שני";
-            case "tuesday":
+            case "Tuesday":
                 return "יום שלישי";
-            case "wednesday":
+            case "Wednesday":
                 return "יום רביעי";
-            case "thursday":
+            case "Thursday":
                 return "יום חמישי";
-            case "friday":
+            case "Friday":
                 return "יום שישי";
-            case "saturday":
+            case "Saturday":
                 return "יום שבת";
             case "יום ראשון":
                 return "יום ראשון";
