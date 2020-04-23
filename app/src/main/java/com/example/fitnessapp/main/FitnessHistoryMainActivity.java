@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -20,6 +21,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.fitnessapp.R;
 import com.example.fitnessapp.keys.KeysFirebaseStore;
 import com.example.fitnessapp.keys.KeysIntents;
+import com.example.fitnessapp.keys.KeysSharedPrefercence;
 import com.example.fitnessapp.models.CustomMethods;
 import com.example.fitnessapp.user.ExerciseHistory;
 import com.example.fitnessapp.user.ExersixeOneRawHistory;
@@ -29,11 +31,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,6 +67,10 @@ public class FitnessHistoryMainActivity extends AppCompatActivity implements Fit
     private boolean btnCrash = true;
     private int lastPositionExThatClicked = 0;
 
+    private Gson gson = new Gson();
+    private SharedPreferences sharedPreferences;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +85,7 @@ public class FitnessHistoryMainActivity extends AppCompatActivity implements Fit
         exDateMain = findViewById(R.id.tv_ex_date_history_fitness_activity);
         btnNextMain = findViewById(R.id.btn_history_next_iv);
         btnBackMain = findViewById(R.id.btn_history_back_iv);
+        sharedPreferences = getSharedPreferences(KeysSharedPrefercence.HISTORY_ACTIVITY, MODE_PRIVATE);
 
 
         lottieAnimationView.playAnimation();
@@ -248,6 +257,32 @@ public class FitnessHistoryMainActivity extends AppCompatActivity implements Fit
 
     private void getHistoryExFromFirebase(String exName){
 
+        try {
+            if (!sharedPreferences.getString(exName,"").equals("")){
+
+                exNameMain.setVisibility(View.INVISIBLE);
+                exDayMain.setVisibility(View.INVISIBLE);
+                exDateMain.setVisibility(View.INVISIBLE);
+                btnBackMain.setVisibility(View.INVISIBLE);
+                recyclerViewMainHistory.setVisibility(View.INVISIBLE);
+                lottieAnimationView.setVisibility(View.VISIBLE);
+
+                System.out.println("HAVE SHAREDPREFRENCE");
+
+                List<ExerciseHistory> listExerciseHistory = new ArrayList<>();
+                String json = sharedPreferences.getString(exName, "");
+                Type type = new TypeToken<List<ExerciseHistory>>() {}.getType();
+                listExerciseHistory = gson.fromJson(json, type);
+                listMutableLiveData.setValue(listExerciseHistory);
+
+                return;
+            }
+
+        }catch (Exception e){
+
+        }
+
+
         exNameMain.setVisibility(View.INVISIBLE);
         exDayMain.setVisibility(View.INVISIBLE);
         exDateMain.setVisibility(View.INVISIBLE);
@@ -317,6 +352,13 @@ public class FitnessHistoryMainActivity extends AppCompatActivity implements Fit
                 }
 
                 listMutableLiveData.setValue(listExerciseHistory);
+
+                SharedPreferences.Editor exHistoryEdit = sharedPreferences.edit();
+                String exHistoryGSON = gson.toJson(listExerciseHistory);
+                exHistoryEdit.putString(exName, exHistoryGSON);
+                exHistoryEdit.apply();
+
+
 //                exerciseHistoryRoot = listExerciseHistory;
 //                counterHistoryBTN = exerciseHistoryRoot.size();
 //                getCorrectHistory = exerciseHistoryRoot.size() - 1;

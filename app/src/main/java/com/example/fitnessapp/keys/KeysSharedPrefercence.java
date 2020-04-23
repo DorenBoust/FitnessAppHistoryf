@@ -9,5 +9,9 @@ public class KeysSharedPrefercence {
     public final static String REFRESH_RESIPE = "refresh recipes";
     public final static String PUT_REFRESH_RESIPE = "put refresh recipes";
 
+    public final static String HISTORY_ACTIVITY = "history activity";
+
+
+
 
 }
